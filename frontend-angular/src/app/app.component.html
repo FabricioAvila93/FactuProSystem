@@ -1,0 +1,16 @@
+<ng-container *ngIf="mostrarNavbar">
+  <app-navbar></app-navbar>
+</ng-container>
+
+<ng-container *ngIf="mostrarSidebar">
+  <div class="container">
+    <app-sidebar></app-sidebar>
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!mostrarSidebar && !mostrarNavbar">
+  <router-outlet></router-outlet>
+</ng-container>

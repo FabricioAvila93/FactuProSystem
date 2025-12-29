@@ -1,0 +1,118 @@
+<div class="page-background">
+  <mat-card class="form-card">
+    <form [formGroup]="formCaiRango" class="form-layout" (ngSubmit)="guardarCambios()">
+      <h2>{{ modo === 'ver' ? 'Detalle CAI' : (esNuevo ? 'Registrar CAI' : 'Editar CAI') }}</h2>
+
+      <!-- Bloque: Proveedor -->
+      <div class="form-bloque">
+        <h3>Proveedor</h3>
+        <div class="form-campo full-width">
+          <label>Proveedor</label>
+          <input matInput formControlName="nombreProveedor" readonly />
+        </div>
+      </div>
+
+      <!-- Bloque: Identificación -->
+      <div class="form-bloque">
+        <h3>Identificación</h3>
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Establecimiento</label>
+            <input matInput formControlName="codigoEstablecimiento" maxlength="3" />
+          </div>
+          <div class="form-campo">
+            <label>Punto Emisión</label>
+            <input matInput formControlName="puntoEmision" maxlength="3" (input)="onInputUppercase($event)" />
+          </div>
+          <div class="form-campo">
+            <label>Tipo Documento</label>
+            <input matInput formControlName="tipoDocumento" maxlength="2" (input)="onInputUppercase($event)" />
+          </div>
+        </div>
+      </div>
+
+<!-- Bloque: Correlativos -->
+<div class="form-bloque">
+  <h3>Correlativos</h3>
+  <div class="form-row">
+    <div class="form-campo">
+      <label>Correlativo Inicio</label>
+      <input matInput formControlName="correlativoInicio" maxlength="8" />
+    </div>
+    <div class="form-campo">
+      <label>Correlativo Fin</label>
+      <input matInput formControlName="correlativoFin" maxlength="8" />
+    </div>
+  </div>
+</div>
+
+<!-- Bloque: Fecha Expiración -->
+<div class="form-bloque">
+  <h3>Fecha Expiración</h3>
+  <div class="form-campo">
+    <label>Fecha Expiración</label>
+    <div class="input-con-toggle">
+      <input matInput [matDatepicker]="picker" formControlName="fechaExpiracion" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
+  </div>
+</div>
+
+
+
+      <!-- Bloque: Documentos Fiscales -->
+      <div class="form-bloque">
+        <h3>Documentos Fiscales</h3>
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Fiscal Inicio</label>
+            <input matInput formControlName="documentoFiscal_Inicio" maxlength="23" readonly/>
+          </div>
+          <div class="form-campo">
+            <label>Fiscal Fin</label>
+            <input matInput formControlName="documentoFiscal_Fin" maxlength="23" readonly />
+          </div>
+        </div>
+      </div>
+
+      <!-- Bloque: Auditoría -->
+      <div class="form-bloque">
+        <h3>Auditoría</h3>
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Usuario Registro</label>
+            <input matInput formControlName="usuarioRegistro" type="text" />
+          </div>
+          <div class="form-campo">
+            <label>Fecha Registro</label>
+            <input matInput formControlName="fechaRegistro" type="text" />
+          </div>
+          <div class="form-campo">
+            <label>Usuario Modificación</label>
+            <input matInput formControlName="usuarioModificacion" type="text" />
+          </div>
+          <div class="form-campo">
+            <label>Fecha Modificación</label>
+            <input matInput formControlName="fechaModificacion" type="text" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Bloque: Estado -->
+      <div class="form-bloque">
+        <div class="form-row">
+          <mat-checkbox formControlName="estaActivo">Activo</mat-checkbox>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="form-bloque form-botones">
+        <button mat-raised-button color="primary" *ngIf="modo === 'editar'" class="form-btn guardar">
+          Guardar
+        </button>
+        <button mat-button type="button" class="form-btn cancelar" (click)="cancelar()">Cerrar</button>
+      </div>
+    </form>
+  </mat-card>
+</div>

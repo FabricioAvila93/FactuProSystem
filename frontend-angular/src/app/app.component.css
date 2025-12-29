@@ -1,0 +1,97 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* elimina scroll del body */
+}
+
+#wrapper {
+  display: flex;
+  height: 100vh;
+  overflow: hidden; /* evita scroll en toda la ventana */
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #2f3d4a;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.sidebar nav ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 12px 20px;
+  display: block;
+  border-radius: 6px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.sidebar nav ul li a:hover {
+  background: #1f2a35;
+  transform: translateX(5px);
+}
+
+/* Footer del sidebar - botón Salir */
+.sidebar-footer {
+  margin-top: auto;
+  text-align: center;
+}
+
+.sidebar-footer a {
+  display: inline-block;
+  background-color: #e74c3c;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+}
+
+.sidebar-footer a:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* Contenido principal */
+#content-wrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* importante para que scroll solo esté en #content */
+}
+
+/* Navbar */
+#topbar {
+  height: 60px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: #2196f3;
+  color: white;
+  flex-shrink: 0; /* no se reduce */
+}
+
+/* Área de contenido con scroll */
+#content {
+  flex-grow: 1;
+  overflow-y: auto; /* solo aquí aparece scroll */
+  padding: 20px;
+  background-color: #f8f9fa;
+}

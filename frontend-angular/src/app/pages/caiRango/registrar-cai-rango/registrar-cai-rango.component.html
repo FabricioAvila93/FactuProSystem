@@ -1,0 +1,269 @@
+<div class="page-background">
+  <mat-card class="form-card">
+    <form
+      [formGroup]="formRegistroCaiRango"
+      class="form-layout"
+      (ngSubmit)="crearCaiRango()"
+    >
+      <h2>Registro de CAI</h2>
+
+      <!-- Bloque: Identificación -->
+      <div class="form-bloque">
+        <h3>Identificación</h3>
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Establecimiento</label>
+            <input
+              matInput
+              formControlName="codigoEstablecimiento"
+              maxlength="3"
+              (keypress)="validarSoloNumeros($event)"
+              (input)="moverFocus($event, inputPuntoEmision)"
+              #inputEstablecimiento
+            />
+            <mat-error
+              *ngIf="
+                formRegistroCaiRango.get('codigoEstablecimiento')?.invalid &&
+                (formRegistroCaiRango.get('codigoEstablecimiento')?.touched ||
+                  formRegistroCaiRango.get('codigoEstablecimiento')?.dirty)
+              "
+            >
+              <ng-container
+                *ngIf="
+                  formRegistroCaiRango
+                    .get('codigoEstablecimiento')
+                    ?.hasError('required')
+                "
+                >El Establecimiento es obligatorio.</ng-container
+              >
+              <ng-container
+                *ngIf="
+                  formRegistroCaiRango
+                    .get('codigoEstablecimiento')
+                    ?.hasError('pattern')
+                "
+                >Solo se permiten números.</ng-container
+              >
+            </mat-error>
+          </div>
+
+          <div class="form-campo">
+            <label>Punto Emisión</label>
+            <input
+              matInput
+              formControlName="puntoEmision"
+              maxlength="3"
+              (keypress)="validarSoloNumeros($event)"
+              (input)="moverFocus($event, inputTipoDocumento)"
+              #inputPuntoEmision
+            />
+            <mat-error
+              *ngIf="
+                formRegistroCaiRango.get('puntoEmision')?.invalid &&
+                (formRegistroCaiRango.get('puntoEmision')?.touched ||
+                  formRegistroCaiRango.get('puntoEmision')?.dirty)
+              "
+            >
+              <ng-container
+                *ngIf="
+                  formRegistroCaiRango.get('puntoEmision')?.hasError('required')
+                "
+                >El Punto Emisión es obligatorio.</ng-container
+              >
+              <ng-container
+                *ngIf="
+                  formRegistroCaiRango.get('puntoEmision')?.hasError('pattern')
+                "
+                >Solo se permiten números.</ng-container
+              >
+            </mat-error>
+          </div>
+
+          <div class="form-campo">
+            <label>Tipo Documento</label>
+            <input
+              matInput
+              formControlName="tipoDocumento"
+              maxlength="2"
+              (keypress)="validarSoloNumeros($event)"
+              #inputTipoDocumento
+            />
+            <mat-error
+              *ngIf="
+                formRegistroCaiRango.get('tipoDocumento')?.invalid &&
+                (formRegistroCaiRango.get('tipoDocumento')?.touched ||
+                  formRegistroCaiRango.get('tipoDocumento')?.dirty)
+              "
+            >
+              <ng-container
+                *ngIf="
+                  formRegistroCaiRango
+                    .get('tipoDocumento')
+                    ?.hasError('required')
+                "
+                >El Tipo Documento es obligatorio.</ng-container
+              >
+              <ng-container
+                *ngIf="
+                  formRegistroCaiRango.get('tipoDocumento')?.hasError('pattern')
+                "
+                >Solo se permiten números.</ng-container
+              >
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bloque: Correlativos -->
+      <div class="form-bloque">
+        <h3>Correlativos</h3>
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Correlativo Inicio</label>
+            <input
+              matInput
+              formControlName="correlativoInicio"
+              maxlength="8"
+              (keypress)="validarSoloNumeros($event)"
+            />
+            <mat-error
+              *ngIf="
+                formRegistroCaiRango.get('correlativoInicio')?.invalid &&
+                (formRegistroCaiRango.get('correlativoInicio')?.touched ||
+                  formRegistroCaiRango.get('correlativoInicio')?.dirty)
+              "
+            >
+              <ng-container
+                *ngIf="
+                  formRegistroCaiRango
+                    .get('correlativoInicio')
+                    ?.hasError('required')
+                "
+                >El Correlativo Inicio es obligatorio.</ng-container
+              >
+              <ng-container
+                *ngIf="
+                  formRegistroCaiRango
+                    .get('correlativoInicio')
+                    ?.hasError('pattern')
+                "
+                >Solo se permiten números.</ng-container
+              >
+            </mat-error>
+          </div>
+
+          <div class="form-campo">
+            <label>Correlativo Fin</label>
+            <input
+              matInput
+              formControlName="correlativoFin"
+              maxlength="8"
+              (keypress)="validarSoloNumeros($event)"
+            />
+            <mat-error
+              *ngIf="
+                formRegistroCaiRango.get('correlativoFin')?.invalid &&
+                (formRegistroCaiRango.get('correlativoFin')?.touched ||
+                  formRegistroCaiRango.get('correlativoFin')?.dirty)
+              "
+            >
+              <ng-container
+                *ngIf="
+                  formRegistroCaiRango
+                    .get('correlativoFin')
+                    ?.hasError('required')
+                "
+                >El Correlativo Fin es obligatorio.</ng-container
+              >
+              <ng-container
+                *ngIf="
+                  formRegistroCaiRango
+                    .get('correlativoFin')
+                    ?.hasError('pattern')
+                "
+                >Solo se permiten números.</ng-container
+              >
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bloque: Fecha Expiración -->
+      <div class="form-bloque">
+        <h3>Fecha Expiración</h3>
+        <div class="form-campo">
+          <label>Fecha Expiración</label>
+          <div class="input-con-toggle">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="fechaExpiracion"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bloque: CAI -->
+      <div class="form-bloque">
+        <h3>CAI</h3>
+        <div class="form-campo full-width">
+          <input
+            matInput
+            formControlName="cai"
+            maxlength="37"
+            (input)="onInputUppercase($event)"
+          />
+          <mat-error
+            *ngIf="
+              formRegistroCaiRango.get('cai')?.invalid &&
+              (formRegistroCaiRango.get('cai')?.touched ||
+                formRegistroCaiRango.get('cai')?.dirty)
+            "
+          >
+            El CAI es obligatorio.
+          </mat-error>
+        </div>
+      </div>
+
+      <!-- Bloque: Documentos Fiscales -->
+      <div class="form-bloque">
+        <h3>Documentos Fiscales</h3>
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Documento Fiscal Inicio</label>
+            <input matInput formControlName="documentoFiscal_Inicio" readonly />
+          </div>
+          <div class="form-campo">
+            <label>Documento Fiscal Fin</label>
+            <input matInput formControlName="documentoFiscal_Fin" readonly />
+          </div>
+        </div>
+      </div>
+
+      <!-- Bloque: Botones -->
+      <div class="form-bloque form-botones">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="form-btn guardar"
+        >
+          Registrar
+        </button>
+        <button
+          mat-button
+          type="button"
+          class="form-btn cancelar"
+          (click)="cancelar()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

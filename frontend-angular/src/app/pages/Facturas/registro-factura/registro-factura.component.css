@@ -1,0 +1,209 @@
+/* =======================
+   Card del formulario
+   ======================= */
+.form-horizontal-factura {
+  max-width: 900px; /* ancho máximo */
+  margin: 1rem auto;
+  padding: 1rem 1.2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  font-family: Arial, sans-serif;
+  font-size: 0.8rem;
+  color: #333;
+  max-height: 90vh; /* altura máxima relativa a la ventana */
+  overflow-y: auto; /* scroll vertical si es necesario */
+}
+
+/* =======================
+   Títulos
+   ======================= */
+.form-horizontal-factura h2 {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* =======================
+   Bloques generales
+   ======================= */
+.bloque {
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem; /* menos padding vertical */
+  margin-bottom: 0.4rem; /* menos separación entre bloques */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+/* =======================
+   Campos generales
+   ======================= */
+.campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.3rem;
+}
+
+.campo label {
+  font-weight: 600;
+  font-size: 0.75rem;
+  margin-bottom: 1px; /* menos espacio entre label y input */
+}
+
+.campo input,
+.campo select {
+  height: 22px; /* más compacto verticalmente */
+  padding: 1px 4px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  width: 100%; /* adaptable al contenedor */
+  max-width: 100%;
+}
+
+/* =======================
+   Bloques horizontales
+   ======================= */
+.bloque-doc-fiscal,
+.bloque-montos-1,
+.bloque-montos-2,
+.bloque-fecha-proveedor-rtn {
+  display: flex;
+  gap: 0.4rem; /* menos separación horizontal */
+  flex-wrap: wrap;
+}
+
+.bloque-doc-fiscal .campo,
+.bloque-montos-1 .campo,
+.bloque-montos-2 .campo,
+.bloque-fecha-proveedor-rtn .campo {
+  flex: 1;
+  min-width: 100px; /* adaptable en pantallas pequeñas */
+}
+
+/* =======================
+   Checkbox
+   ======================= */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  margin-bottom: 0.3rem;
+}
+
+.checkbox-label input[type="checkbox"] {
+  margin-right: 0.3rem;
+  width: 16px;
+  height: 16px;
+}
+
+/* =======================
+   Bloques especiales
+   ======================= */
+.input-con-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+.input-con-toggle input[matInput] {
+  flex: 1;
+  min-width: 0;
+}
+
+.input-con-toggle mat-datepicker-toggle {
+  margin-left: 0.2rem;
+}
+
+/* =======================
+   Botones
+   ======================= */
+.centered-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap; /* evita que se pierdan botones en pantallas pequeñas */
+}
+
+.centered-buttons button {
+  min-width: 90px;
+  padding: 0.3rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: none;
+}
+
+.centered-buttons button[type="submit"] {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+.centered-buttons button[type="submit"]:hover {
+  background-color: #1565c0;
+}
+
+.centered-buttons button[type="button"] {
+  background-color: #f3f3f3;
+  color: #555;
+  border: 1px solid #ccc;
+}
+
+.centered-buttons button[type="button"]:hover {
+  background-color: #e0e0e0;
+}
+
+/* =======================
+   Mensajes de error
+   ======================= */
+.error {
+  font-size: 0.7rem;
+  color: red;
+  margin-top: 2px;
+}
+
+/* =======================
+   Bloque Documento y Fecha
+   ======================= */
+.bloque-documento-fecha {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.bloque-documento-fecha .campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.bloque-documento-fecha select,
+.bloque-documento-fecha input {
+  width: 100%;
+  max-width: 300px; /* tamaño máximo adaptable */
+  padding: 1px 4px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* =======================
+   Inputs especiales
+   ======================= */
+#numeroDocumentoRecibo,
+#totalCompra,
+#kilometrajeRecorrido {
+  width: 120px;
+  max-width: 100%;
+  padding: 1px 4px;
+  font-size: 0.75rem;
+}

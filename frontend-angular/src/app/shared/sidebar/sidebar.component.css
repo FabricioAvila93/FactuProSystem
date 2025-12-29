@@ -1,0 +1,95 @@
+/* Contenedor principal */
+.container {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden; /* evita scroll en toda la página */
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #263238; /* azul oscuro moderno */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* cambiar de space-between */
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+/* Header del sidebar */
+.sidebar-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Navegación */
+.sidebar-nav {
+  flex-grow: 1; /* ocupa el espacio disponible */
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav ul li {
+  margin-bottom: 12px;
+}
+
+.sidebar-nav ul li a {
+  display: block;
+  color: #ecf0f1;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.sidebar-nav ul li a:hover {
+  background-color: #1976d2; /* azul hover */
+  transform: translateX(5px);
+}
+
+/* Footer con botón salir */
+.sidebar-footer {
+  margin-top: 25px; /* sube el botón de salir un poco */
+}
+
+.sidebar-footer a {
+  display: block;
+  background-color: #e74c3c;
+  color: #fff;
+  text-align: center;
+  padding: 10px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.sidebar-footer a:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* Contenido principal */
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto; /* scroll solo en contenido */
+  background-color: #f8f9fa;
+}
+
+
+/* Footer */
+.sidebar-footer {
+  flex-shrink: 0; /* evita que se achique */
+  padding-bottom: 60px; /* ajusta este valor según quieras subir o bajar el botón */
+}

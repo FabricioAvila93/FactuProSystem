@@ -1,0 +1,19 @@
+.content {
+  flex-grow: 1;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: center; /* centro horizontal */
+  align-items: center; /* centro vertical */
+  position: relative;
+  height: 100%;
+}
+
+.home-center img {
+  width: 500px; /* tamaño grande */
+  max-width: 80%; /* no exceder el contenedor */
+  opacity: 0.05; /* transparencia muy alta */
+  position: absolute;
+  top: 35%; /* un poco más arriba del centro */
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

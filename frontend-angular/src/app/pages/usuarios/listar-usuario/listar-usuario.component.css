@@ -1,0 +1,101 @@
+/* Contenedor general */
+.contenedor-tabla {
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+.titulo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+  color: #333;
+}
+
+.mensaje-carga,
+.mensaje-error {
+  margin: 1rem 0;
+  font-weight: 500;
+}
+
+.mensaje-error {
+  color: red;
+}
+
+.tabla-usuarios {
+  width: 100%;
+  margin-top: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th.mat-header-cell {
+  background-color: #f3f3f3;
+  font-weight: bold;
+}
+
+td.mat-cell,
+th.mat-header-cell {
+  padding: 12px;
+  font-size: 0.95rem;
+}
+
+mat-paginator {
+  margin-top: 1rem;
+}
+
+.icono-accion {
+  cursor: pointer;
+  font-size: 20px;
+  color: #555;
+  margin: 0 4px;
+  transition: color 0.2s ease;
+}
+
+.icono-accion:hover {
+  color: #1976d2; /* azul al pasar el mouse */
+}
+
+.ancho-completo {
+  width: 100%;
+  max-width: 100%;
+}
+
+.filtro-boton-wrapper {
+  display: flex;
+  justify-content: space-between; /* uno a la izquierda y otro a la derecha */
+  align-items: center;
+  width: 100%;
+  margin-bottom: 12px; /* espacio abajo para que no se pegue a la tabla */
+}
+
+.filtro-nombre {
+  width: 300px; /* ancho fijo para el filtro, ajusta si quieres */
+}
+
+.icono-activo {
+  color: rgb(0, 128, 0);
+}
+
+.icono-inactivo {
+  color: red;
+}
+
+.btn-centrado {
+  display: flex;
+  justify-content: center; /* Centra ícono + texto */
+  align-items: center; /* Alinea verticalmente */
+  gap: 8px; /* Espacio entre ícono y texto */
+  width: 100%; /* Asegura que el botón ocupe todo el ancho disponible */
+  text-align: center;
+}
+
+.icono-accion {
+  color: rgb(27, 27, 27);
+}

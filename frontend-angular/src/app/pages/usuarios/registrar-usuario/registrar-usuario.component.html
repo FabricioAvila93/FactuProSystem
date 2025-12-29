@@ -1,0 +1,262 @@
+<div class="page-background">
+  <mat-card class="form-card">
+    <form
+      [formGroup]="formRegistro"
+      (ngSubmit)="crearUsuario()"
+      class="form-layout"
+    >
+      <h2>Registro de Usuario</h2>
+
+      <!-- BLOQUE 1: Identificación y Sexo -->
+      <div class="form-bloque">
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Identificación</label>
+            <input
+              matInput
+              formControlName="identificacion"
+              maxlength="15"
+              (input)="formatearIdentificacion($event)"
+              (keypress)="validarSoloNumeros($event)"
+            />
+            <mat-error
+              *ngIf="
+                formRegistro.get('identificacion')?.invalid &&
+                (formRegistro.get('identificacion')?.touched ||
+                  formRegistro.get('identificacion')?.dirty)
+              "
+            >
+              <ng-container
+                *ngIf="formRegistro.get('identificacion')?.hasError('required')"
+              >
+                La identificación es obligatoria.
+              </ng-container>
+              <ng-container
+                *ngIf="formRegistro.get('identificacion')?.hasError('pattern')"
+              >
+                Solo se permiten números.
+              </ng-container>
+              <ng-container
+                *ngIf="
+                  formRegistro.get('identificacion')?.hasError('duplicado')
+                "
+              >
+                Ya existe un usuario con esa identificación.
+              </ng-container>
+            </mat-error>
+          </div>
+
+          <div class="form-campo">
+            <label>Sexo</label>
+            <mat-select formControlName="esMasculino">
+              <mat-option value="" disabled>Seleccione una opción</mat-option>
+              <mat-option [value]="true">MASCULINO</mat-option>
+              <mat-option [value]="false">FEMENINO</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                formRegistro.get('esMasculino')?.invalid &&
+                (formRegistro.get('esMasculino')?.touched ||
+                  formRegistro.get('esMasculino')?.dirty)
+              "
+            >
+              El sexo es obligatorio.
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 2: Nombre Completo y Código Usuario -->
+      <div class="form-bloque">
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Nombre Completo</label>
+            <input
+              matInput
+              formControlName="nombreCompleto"
+              (input)="onInputUppercase($event)"
+            />
+            <mat-error
+              *ngIf="
+                formRegistro.get('nombreCompleto')?.invalid &&
+                (formRegistro.get('nombreCompleto')?.touched ||
+                  formRegistro.get('nombreCompleto')?.dirty)
+              "
+            >
+              El nombre es obligatorio.
+            </mat-error>
+          </div>
+
+          <div class="form-campo">
+            <label>Código Usuario</label>
+            <input
+              matInput
+              formControlName="codigoUsuario"
+              (input)="onInputUppercase($event)"
+            />
+            <mat-error
+              *ngIf="
+                formRegistro.get('codigoUsuario')?.invalid &&
+                (formRegistro.get('codigoUsuario')?.touched ||
+                  formRegistro.get('codigoUsuario')?.dirty)
+              "
+            >
+              <ng-container
+                *ngIf="formRegistro.get('codigoUsuario')?.hasError('required')"
+              >
+                El código es obligatorio.
+              </ng-container>
+              <ng-container
+                *ngIf="formRegistro.get('codigoUsuario')?.hasError('duplicado')"
+              >
+                Ya existe un usuario con ese código.
+              </ng-container>
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 3: Dirección (bloque separado) -->
+      <div class="form-bloque">
+        <div class="form-campo full-width">
+          <label>Dirección</label>
+          <input
+            matInput
+            formControlName="direccion"
+            (input)="onInputUppercase($event)"
+          />
+          <mat-error
+            *ngIf="
+              formRegistro.get('direccion')?.invalid &&
+              (formRegistro.get('direccion')?.touched ||
+                formRegistro.get('direccion')?.dirty)
+            "
+          >
+            La dirección es obligatoria.
+          </mat-error>
+        </div>
+      </div>
+
+      <!-- BLOQUE 4: Teléfono y Correo -->
+      <div class="form-bloque">
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Teléfono</label>
+            <input
+              matInput
+              formControlName="telefono"
+              maxlength="12"
+              (keypress)="validarTelefono($event)"
+            />
+            <mat-error
+              *ngIf="
+                formRegistro.get('telefono')?.invalid &&
+                (formRegistro.get('telefono')?.touched ||
+                  formRegistro.get('telefono')?.dirty)
+              "
+            >
+              <ng-container
+                *ngIf="formRegistro.get('telefono')?.hasError('required')"
+              >
+                El teléfono es obligatorio.
+              </ng-container>
+              <ng-container
+                *ngIf="formRegistro.get('telefono')?.hasError('pattern')"
+              >
+                Solo se permiten números.
+              </ng-container>
+            </mat-error>
+          </div>
+
+          <div class="form-campo">
+            <label>Correo</label>
+            <input matInput type="email" formControlName="correo" />
+            <mat-error
+              *ngIf="
+                formRegistro.get('correo')?.invalid &&
+                (formRegistro.get('correo')?.touched ||
+                  formRegistro.get('correo')?.dirty)
+              "
+            >
+              <ng-container
+                *ngIf="formRegistro.get('correo')?.hasError('required')"
+              >
+                El correo es obligatorio.
+              </ng-container>
+              <ng-container
+                *ngIf="formRegistro.get('correo')?.hasError('email')"
+              >
+                Correo no válido.
+              </ng-container>
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 5: Rol y Agencia -->
+      <div class="form-bloque">
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Rol</label>
+            <mat-select formControlName="idRol">
+              <mat-option value="" disabled>Seleccione un Rol</mat-option>
+              <mat-option *ngFor="let rol of roles" [value]="rol.id">{{
+                rol.nombre
+              }}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                formRegistro.get('idRol')?.invalid &&
+                (formRegistro.get('idRol')?.touched ||
+                  formRegistro.get('idRol')?.dirty)
+              "
+            >
+              El rol es obligatorio.
+            </mat-error>
+          </div>
+
+          <div class="form-campo">
+            <label>Agencia</label>
+            <mat-select formControlName="idAgencia">
+              <mat-option value="" disabled>Seleccione una agencia</mat-option>
+              <mat-option
+                *ngFor="let agencia of agencias"
+                [value]="agencia.id"
+                >{{ agencia.nombre }}</mat-option
+              >
+            </mat-select>
+            <mat-error
+              *ngIf="
+                formRegistro.get('idAgencia')?.invalid &&
+                (formRegistro.get('idAgencia')?.touched ||
+                  formRegistro.get('idAgencia')?.dirty)
+              "
+            >
+              La agencia es obligatoria.
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 6: Botones -->
+      <div class="form-bloque form-botones">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="form-btn guardar"
+        >
+          Registrar
+        </button>
+        <button
+          mat-button
+          type="button"
+          class="form-btn cancelar"
+          (click)="cancelar()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

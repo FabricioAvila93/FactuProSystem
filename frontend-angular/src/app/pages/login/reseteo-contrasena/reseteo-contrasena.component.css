@@ -1,0 +1,87 @@
+.page-background {
+  height: 100vh;
+  background-color: #2196f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.card-login-vertical {
+  width: 100%;
+  max-width: 320px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-centrado img {
+  width: 90px;
+  object-fit: contain;
+}
+
+h2 {
+  color: #1565c0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 0 0 12px 0; /* pequeño margen inferior */
+}
+
+.form-login {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-custom {
+  width: 100%;
+}
+
+.botones {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+button[mat-raised-button] {
+  background-color: #1565c0;
+  color: white;
+  border-radius: 30px;
+  height: 40px;
+  font-weight: 600;
+  box-shadow: 0 5px 10px rgb(33 150 243 / 0.4);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+button[mat-raised-button]:hover {
+  background-color: #1565c0;
+}
+
+button[mat-button] {
+  color: #d32f2f;
+  font-weight: 600;
+  border-radius: 30px;
+  height: 40px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+button[mat-button]:hover {
+  background-color: rgba(211, 47, 47, 0.1);
+}
+
+.mensaje-validacion {
+  color: red; /* Siempre rojo */
+  font-size: 0.9rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center; /* Centrado */
+}

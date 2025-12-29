@@ -1,0 +1,174 @@
+/* Contenedor general */
+.contenedor-tabla {
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+.titulo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+  color: #333;
+}
+
+.mensaje-carga,
+.mensaje-error {
+  margin: 1rem 0;
+  font-weight: 500;
+}
+
+.mensaje-error {
+  color: red;
+}
+
+.tabla-usuarios {
+  width: 100%;
+  margin-top: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th.mat-header-cell {
+  background-color: #f3f3f3;
+  font-weight: bold;
+}
+
+td.mat-cell,
+th.mat-header-cell {
+  padding: 12px;
+  font-size: 0.95rem;
+}
+
+mat-paginator {
+  margin-top: 1rem;
+}
+
+.icono-accion {
+  cursor: pointer;
+  font-size: 20px;
+  color: #555;
+  margin: 0 4px;
+  transition: color 0.2s ease;
+}
+
+.icono-accion:hover {
+  color: #1976d2; /* azul al pasar el mouse */
+}
+
+.ancho-completo {
+  width: 100%;
+  max-width: 100%;
+}
+
+.filtro-boton-wrapper {
+  display: flex;
+  justify-content: space-between; /* uno a la izquierda y otro a la derecha */
+  align-items: center;
+  width: 100%;
+  margin-bottom: 12px; /* espacio abajo para que no se pegue a la tabla */
+}
+
+.filtro-nombre {
+  width: 300px; /* ancho fijo para el filtro, ajusta si quieres */
+}
+
+.icono-activo {
+  color: rgb(0, 128, 0);
+}
+
+.icono-inactivo {
+  color: red;
+}
+
+.btn-centrado {
+  display: flex;
+  justify-content: center; /* Centra ícono + texto */
+  align-items: center; /* Alinea verticalmente */
+  gap: 8px; /* Espacio entre ícono y texto */
+  width: 100%; /* Asegura que el botón ocupe todo el ancho disponible */
+  text-align: center;
+}
+
+.icono-accion {
+  color: rgb(27, 27, 27);
+}
+/* ... tu CSS general ... */
+.comentario-container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 15px auto;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-left: 5px solid #d32f2f;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.comentario-container textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 150px;
+  font-size: 16px;
+  padding: 10px;
+  resize: vertical;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.btn-evaluar {
+  margin: 0 5px;
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-rechazar {
+  background-color: #f44336;
+}
+
+.btn-rechazar:hover {
+  background-color: #d32f2f;
+}
+
+.btn-cancelar {
+  background-color: #9e9e9e;
+}
+
+.btn-cancelar:hover {
+  background-color: #616161;
+}
+
+.comentario-dialogo {
+  width: 80%; /* más compacto que el contenedor general */
+  max-width: 500px; /* ancho máximo para no ocupar toda la pantalla */
+  margin: 10px auto; /* centrado horizontal */
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-left: 5px solid #d32f2f;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.comentario-dialogo textarea {
+  width: 100%;
+  min-height: 120px;
+  font-size: 16px;
+  padding: 10px;
+  resize: vertical;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}

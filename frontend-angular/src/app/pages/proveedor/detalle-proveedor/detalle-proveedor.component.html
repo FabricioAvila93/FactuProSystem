@@ -1,0 +1,120 @@
+<div class="page-background">
+  <mat-card class="form-card">
+    <form
+      [formGroup]="formProveedor"
+      class="form-layout"
+      (ngSubmit)="guardarCambios()"
+    >
+      <h2>Detalle Proveedor</h2>
+
+      <!-- BLOQUE 1: Identificación -->
+      <div class="form-bloque">
+        <h3>Información Básica</h3>
+        <div class="form-row">
+          <div class="form-campo">
+            <label>RTN</label>
+            <input matInput formControlName="rtnProveedor" maxlength="14" />
+            <mat-error
+              *ngIf="
+                formProveedor.get('rtnProveedor')?.invalid &&
+                (formProveedor.get('rtnProveedor')?.touched ||
+                  formProveedor.get('rtnProveedor')?.dirty)
+              "
+            >
+              El RTN es obligatorio.
+            </mat-error>
+          </div>
+
+          <div class="form-campo">
+            <label>Nombre Proveedor</label>
+            <input
+              matInput
+              formControlName="nombreProveedor"
+              (input)="onInputUppercase($event)"
+            />
+            <mat-error
+              *ngIf="
+                formProveedor.get('nombreProveedor')?.invalid &&
+                (formProveedor.get('nombreProveedor')?.touched ||
+                  formProveedor.get('nombreProveedor')?.dirty)
+              "
+            >
+              El nombre es obligatorio.
+            </mat-error>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Dirección</label>
+            <input
+              matInput
+              formControlName="direccion"
+              (input)="onInputUppercase($event)"
+            />
+          </div>
+
+          <div class="form-campo">
+            <label>Teléfono</label>
+            <input matInput formControlName="telefono" maxlength="13" />
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 2: Auditoría -->
+      <div class="form-bloque">
+        <h3>Auditoría</h3>
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Usuario Registro</label>
+            <input matInput formControlName="usuarioRegistro" readonly />
+          </div>
+
+          <div class="form-campo">
+            <label>Fecha Registro</label>
+            <input matInput formControlName="fechaRegistro" readonly />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Usuario Modificación</label>
+            <input matInput formControlName="usuarioModificacion" readonly />
+          </div>
+
+          <div class="form-campo">
+            <label>Fecha Modificación</label>
+            <input matInput formControlName="fechaModificacion" readonly />
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 3: Activo -->
+      <div class="form-bloque">
+        <div class="form-campo">
+          <mat-checkbox formControlName="estaActivo">Activo</mat-checkbox>
+        </div>
+      </div>
+
+      <!-- BLOQUE 4: Botones -->
+      <div class="form-bloque form-botones">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="form-btn guardar"
+        >
+          Guardar
+        </button>
+        <button
+          mat-button
+          type="button"
+          class="form-btn cancelar"
+          (click)="cancelar()"
+        >
+          Cerrar
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

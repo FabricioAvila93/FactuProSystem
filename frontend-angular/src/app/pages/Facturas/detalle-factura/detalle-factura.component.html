@@ -1,0 +1,265 @@
+<form
+  [formGroup]="formDetalleFactura"
+  class="form-horizontal-factura"
+  (ngSubmit)="guardarCambios()"
+>
+  <h2>
+    {{
+      modo === "ver"
+        ? "Detalle Factura"
+        : esNuevo
+        ? "Registrar Factura"
+        : "Editar Factura"
+    }}
+  </h2>
+
+  <!-- BLOQUE: Documento -->
+  <div class="bloque bloque-documento-fecha">
+    <div class="campo">
+      <label for="idDocumento">Documento</label>
+      <select id="idDocumento" formControlName="idDocumento">
+        <option value="">Seleccione</option>
+        <option *ngFor="let doc of tipoDocumentoFactura" [value]="doc.id">
+          {{ doc.nombreDocumento }}
+        </option>
+      </select>
+    </div>
+
+    <div class="campo campo-fecha">
+      <label for="fecha">Fecha</label>
+      <div class="input-con-toggle">
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="fecha"
+          id="fecha"
+          maxlength="10"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE: Factura Gasolina -->
+  <div
+    class="bloque bloque-gasolina"
+    *ngIf="formDetalleFactura.get('esGasolina')?.value"
+  >
+    <label class="checkbox-label">
+      <input
+        type="checkbox"
+        [checked]="formDetalleFactura.get('esGasolina')?.value"
+      />
+      ¿Es factura de gasolina?
+    </label>
+
+    <div class="campo campo-med">
+      <label for="kilometrajeRecorrido">Km Recorrido</label>
+      <input
+        id="kilometrajeRecorrido"
+        type="number"
+        formControlName="kilometrajeRecorrido"
+      />
+    </div>
+  </div>
+
+  <!-- BLOQUE: Proveedor y RTN -->
+  <div class="bloque bloque-fecha-proveedor-rtn">
+    <div class="campo campo-proveedor">
+      <label for="proveedor">Proveedor</label>
+      <input
+        type="text"
+        id="proveedor"
+        [formControl]="proveedorControl"
+        [matAutocomplete]="autoProveedor"
+        [readonly]="modoSoloLectura"
+      />
+      <mat-autocomplete
+        #autoProveedor="matAutocomplete"
+        (optionSelected)="onProveedorSeleccionado($event.option.value)"
+      >
+        <mat-option
+          *ngFor="let p of proveedoresFiltrados | async"
+          [value]="p.nombreProveedor"
+        >
+          {{ p.nombreProveedor }}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+
+    <div class="campo campo-rtn">
+      <label for="rtnProveedor">RTN</label>
+      <input
+        type="text"
+        id="rtnProveedor"
+        formControlName="rtnProveedor"
+        maxlength="14"
+        readonly
+      />
+    </div>
+  </div>
+
+  <!-- BLOQUE: Documento Fiscal -->
+  <div class="bloque bloque-doc-fiscal">
+    <div class="campo">
+      <label for="establecimiento">Establecimiento</label>
+      <input
+        #establecimientoInput
+        id="establecimiento"
+        type="text"
+        formControlName="establecimiento"
+        maxlength="3"
+        (input)="moverFocus($event, puntoEmisionInput)"
+      />
+    </div>
+    <div class="campo">
+      <label for="puntoEmision">Punto Emisión</label>
+      <input
+        #puntoEmisionInput
+        id="puntoEmision"
+        type="text"
+        formControlName="puntoEmision"
+        maxlength="3"
+        (input)="moverFocus($event, tipoDocumentoInput)"
+      />
+    </div>
+    <div class="campo">
+      <label for="tipoDocumento">Tipo Documento</label>
+      <input
+        #tipoDocumentoInput
+        id="tipoDocumento"
+        type="text"
+        formControlName="tipoDocumento"
+        maxlength="2"
+        (input)="moverFocus($event, correlativoInput)"
+      />
+    </div>
+    <div class="campo">
+      <label for="correlativo">Correlativo</label>
+      <input
+        #correlativoInput
+        id="correlativo"
+        type="text"
+        formControlName="correlativo"
+        maxlength="8"
+      />
+
+      <div
+        class="error"
+        *ngIf="formDetalleFactura.get('correlativo')?.hasError('yaRegistrado')"
+      >
+        Este documento fiscal ya pertenece a otra factura.
+      </div>
+
+      <!-- Error por documento fuera del rango CAI del proveedor -->
+      <div
+        class="error"
+        *ngIf="formDetalleFactura.get('correlativo')?.hasError('rangoInvalido')"
+      >
+        El documento fiscal no pertenece al proveedor seleccionado.
+      </div>
+
+      <!-- Error por fallo en la validación (ej. error del servidor) -->
+      <div
+        class="error"
+        *ngIf="
+          formDetalleFactura.get('correlativo')?.hasError('errorValidacion')
+        "
+      >
+        Error al validar el documento fiscal. Intente de nuevo.
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE: CAI y Recibo -->
+  <div class="bloque bloque-cai-recibo">
+    <div class="campo">
+      <label for="cai">CAI</label>
+      <input
+        id="cai"
+        type="text"
+        formControlName="cai"
+        maxlength="39"
+        readonly
+      />
+    </div>
+  </div>
+
+  <div class="bloque bloque-doc-recibo">
+    <div class="campo">
+      <label for="numeroDocumentoRecibo">Doc. Recibo</label>
+      <input
+        id="numeroDocumentoRecibo"
+        type="text"
+        formControlName="numeroDocumentoRecibo"
+        maxlength="8"
+      />
+    </div>
+  </div>
+  <div class="bloque bloque-montos-1">
+    <div class="campo">
+      <label for="exentas">Exentas</label>
+      <input id="exentas" type="number" formControlName="exentas" />
+    </div>
+    <div class="campo">
+      <label for="grav15">Gravado 15%</label>
+      <input id="grav15" type="number" formControlName="grav15" />
+    </div>
+    <div class="campo">
+      <label for="grav18">Gravado 18%</label>
+      <input id="grav18" type="number" formControlName="grav18" />
+    </div>
+  </div>
+
+  <!-- BLOQUE: Montos 2 -->
+  <div class="bloque bloque-montos-2">
+    <div class="campo">
+      <label for="impuesto15">Impuesto 15%</label>
+      <input
+        id="impuesto15"
+        type="number"
+        formControlName="impuesto15"
+        readonly
+      />
+    </div>
+    <div class="campo">
+      <label for="impuesto18">Impuesto 18%</label>
+      <input
+        id="impuesto18"
+        type="number"
+        formControlName="impuesto18"
+        readonly
+      />
+    </div>
+  </div>
+
+  <!-- BLOQUE: Total Compra -->
+  <div class="bloque bloque-total-compra">
+    <div class="campo">
+      <label for="totalCompra">Total Compra</label>
+      <input
+        id="totalCompra"
+        type="number"
+        formControlName="totalCompra"
+        readonly
+      />
+    </div>
+  </div>
+
+  <div class="bloque bloque-botones centered-buttons">
+    <button
+      mat-raised-button
+      color="primary"
+      *ngIf="modo === 'editar'"
+      class="btn-guardar"
+      type="submit"
+    >
+      Guardar
+    </button>
+
+    <button mat-button type="button" class="btn-cancelar" (click)="cancelar()">
+      Cerrar
+    </button>
+  </div>
+</form>

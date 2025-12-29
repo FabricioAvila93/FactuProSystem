@@ -1,0 +1,53 @@
+/* Global styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* 🔥 elimina el scroll global */
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Contenedor principal de tu app */
+.app-container {
+  display: flex;
+  height: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #263238;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenido principal */
+.content {
+  flex: 1;
+  overflow-y: auto; /* solo el contenido tendrá scroll */
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+/* Snackbars */
+.snackbar-center {
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  max-width: 400px;
+  width: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.snackbar-success {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+
+.snackbar-error {
+  background-color: #f44336 !important;
+  color: white !important;
+}

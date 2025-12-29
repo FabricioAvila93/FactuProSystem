@@ -1,0 +1,119 @@
+<div class="contenedor-tabla">
+  <h2 class="titulo">Lista de Usuarios</h2>
+
+  <!-- Mensajes de carga o error -->
+  <div *ngIf="cargando" class="mensaje-carga">Cargando usuarios...</div>
+  <div *ngIf="error" class="mensaje-error">{{ error }}</div>
+
+  <div class="filtro-boton-wrapper">
+    <div class="filtro-nuevo-container">
+      <mat-form-field appearance="outline" class="filtro-nombre">
+        <mat-label>Buscar por nombre</mat-label>
+        <input matInput (keyup)="aplicarFiltro($event)" />
+      </mat-form-field>
+    </div>
+    <div class="filtro-boton-nuevo-container">
+      <button
+        mat-raised-button
+        color="primary"
+        class="btn-centrado"
+        (click)="abrirFormularioNuevoUsuario()"
+        matTooltip="Registrar Nuevo Usuario"
+      >
+        <mat-icon>person_add</mat-icon>
+        Nuevo Usuario
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla de usuarios -->
+  <table
+    *ngIf="!cargando && !error"
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8 tabla-usuarios"
+  >
+    <!-- ID Usuario -->
+    <ng-container matColumnDef="idUsuario">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let usuario">{{ usuario.idUsuario }}</td>
+    </ng-container>
+
+    <!-- Código Usuario -->
+    <ng-container matColumnDef="codigoUsuario">
+      <th mat-header-cell *matHeaderCellDef>Código</th>
+      <td mat-cell *matCellDef="let usuario">{{ usuario.codigoUsuario }}</td>
+    </ng-container>
+
+    <!-- Nombre Completo -->
+    <ng-container matColumnDef="nombreCompleto">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let usuario">{{ usuario.nombreCompleto }}</td>
+    </ng-container>
+
+    <!-- Identificación -->
+    <ng-container matColumnDef="identificacion">
+      <th mat-header-cell *matHeaderCellDef>Identificación</th>
+      <td mat-cell *matCellDef="let usuario">{{ usuario.identificacion }}</td>
+    </ng-container>
+
+    <!-- Rol -->
+    <ng-container matColumnDef="rol">
+      <th mat-header-cell *matHeaderCellDef>Rol</th>
+      <td mat-cell *matCellDef="let usuario">{{ usuario.nombreRol }}</td>
+    </ng-container>
+
+    <!-- Agencia -->
+    <ng-container matColumnDef="agencia">
+      <th mat-header-cell *matHeaderCellDef>Agencia</th>
+      <td mat-cell *matCellDef="let usuario">{{ usuario.nombreAgencia }}</td>
+    </ng-container>
+
+    <!-- Activo -->
+    <ng-container matColumnDef="activo">
+      <th mat-header-cell *matHeaderCellDef>Activo</th>
+      <td mat-cell *matCellDef="let usuario">
+        <mat-icon
+          [ngClass]="usuario.estaActivo ? 'icono-activo' : 'icono-inactivo'"
+        >
+          {{ usuario.estaActivo ? "check_circle" : "cancel" }}
+        </mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- ACCIONES -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef class="centrar-texto">Acciones</th>
+      <td mat-cell *matCellDef="let usuario" class="centrar-texto">
+        <mat-icon
+          class="icono-accion"
+          (click)="abrirFormularioVerUsuario(usuario.idUsuario)"
+          matTooltip="Detalle"
+        >
+          visibility
+        </mat-icon>
+
+        <mat-icon
+          class="icono-accion"
+          (click)="abrirFormularioEditarUsuario(usuario.idUsuario)"
+          matTooltip="Editar"
+        >
+          edit
+        </mat-icon>
+
+        <mat-icon
+          class="icono-accion"
+          (click)="resetearClave(usuario.idUsuario, usuario.codigoUsuario)"
+          matTooltip="Reestablecer Contraseña"
+        >
+          lock
+        </mat-icon>
+      </td>
+    </ng-container>
+    <!-- Encabezado y filas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+</div>

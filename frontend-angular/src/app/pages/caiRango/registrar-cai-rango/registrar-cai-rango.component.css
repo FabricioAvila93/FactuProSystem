@@ -1,0 +1,134 @@
+.form-card {
+  max-width: 700px;
+  margin: 0.5rem auto;
+  padding: 0.6rem 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.08); /* Borde tenue */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+h3 {
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.form-layout {
+  font-family: Arial, sans-serif;
+  font-size: 0.8rem;
+  color: #333;
+}
+
+.form-bloque {
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  margin-bottom: 0.6rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.form-campo {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-campo label {
+  font-weight: 600;
+  margin-bottom: 1px;
+  font-size: 0.75rem;
+}
+
+input[matInput] {
+  height: 24px;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-checkbox {
+  font-size: 0.75rem;
+  margin-top: 0.2rem;
+}
+
+.form-botones {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+.form-btn {
+  min-width: 90px;
+  padding: 0.3rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+.form-btn.guardar {
+  background-color: #1976d2;
+  color: white;
+}
+
+.form-btn.guardar:hover {
+  background-color: #1565c0;
+}
+
+.form-btn.cancelar {
+  color: #555;
+  border: 1px solid #ccc;
+  background-color: #f3f3f3;
+}
+
+.form-btn.cancelar:hover {
+  background-color: #e0e0e0;
+}
+
+/* Contenedor compacto */
+.input-con-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem; /* menos separación entre input y toggle */
+  width: 180px; /* ancho máximo total */
+  max-width: 100%;
+}
+
+.input-con-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+.input-con-toggle input[matInput] {
+  flex: 1;
+  min-width: 0;
+}
+
+.input-con-toggle mat-datepicker-toggle {
+  margin-left: 0.2rem;
+}

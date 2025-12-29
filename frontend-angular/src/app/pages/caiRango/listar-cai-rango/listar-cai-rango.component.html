@@ -1,0 +1,129 @@
+<div class="contenedor-tabla">
+  <h2 class="titulo">Lista de CAI</h2>
+
+  <!-- Mensajes de carga o error -->
+  <div *ngIf="cargando" class="mensaje-carga">Cargando Lista de CAI...</div>
+  <div *ngIf="error" class="mensaje-error">{{ error }}</div>
+
+  <h2>Proveedor: {{ nombreProveedor }}</h2>
+
+  <!-- Filtro y botón nuevo -->
+  <div class="filtro-boton-wrapper">
+    <div class="filtro-nuevo-container">
+      <mat-form-field appearance="outline" class="filtro-nombre">
+        <mat-label>Buscar por nombre</mat-label>
+        <input
+          matInput
+          (keyup)="aplicarFiltro($event)"
+          placeholder="Buscar en los campos..."
+        />
+      </mat-form-field>
+    </div>
+    <div class="filtro-boton-nuevo-container">
+      <button
+        mat-raised-button
+        color="primary"
+        class="btn-centrado"
+        (click)="abrirFormularioNuevoRangoCai()"
+        matTooltip="Registrar nuevo CAI"
+      >
+        <mat-icon>library_add</mat-icon>
+        Nuevo CAI
+      </button>
+    </div>
+  </div>
+
+  <div
+    *ngIf="!cargando && !error && dataSource.data.length === 0"
+    class="mensaje-aviso"
+  >
+    Aún no hay rangos CAI registrados para este proveedor.
+  </div>
+
+  <!-- Tabla -->
+  <table
+    *ngIf="!cargando && !error"
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8 tabla-usuarios"
+    matSort
+  >
+    <!-- ID Rango CAI -->
+    <ng-container matColumnDef="idRangoCAI">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let rangoCai">{{ rangoCai.idRangoCAI }}</td>
+    </ng-container>
+
+    <!-- CAI -->
+    <ng-container matColumnDef="CAI">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>CAI</th>
+      <td mat-cell *matCellDef="let rangoCai">{{ rangoCai.cai }}</td>
+    </ng-container>
+
+    <!-- Documento Fiscal Inicio -->
+    <ng-container matColumnDef="documentoFiscal_Inicio">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Doc. Fiscal Inicio
+      </th>
+      <td mat-cell *matCellDef="let rangoCai">
+        {{ rangoCai.documentoFiscal_Inicio }}
+      </td>
+    </ng-container>
+
+    <!-- Documento Fiscal Fin -->
+    <ng-container matColumnDef="documentoFiscal_Fin">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Doc. Fiscal Fin</th>
+      <td mat-cell *matCellDef="let rangoCai">
+        {{ rangoCai.documentoFiscal_Fin }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaExpiracion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Fecha Expiración
+      </th>
+      <td mat-cell *matCellDef="let rangoCai">
+        {{ rangoCai.fechaExpiracion | date : "dd/MM/yyyy" }}
+      </td>
+    </ng-container>
+
+    <!-- Estado -->
+    <ng-container matColumnDef="activo">
+      <th mat-header-cell *matHeaderCellDef>Activo</th>
+      <td mat-cell *matCellDef="let rangoCai">
+        <mat-icon
+          [ngClass]="rangoCai.estaActivo ? 'icono-activo' : 'icono-inactivo'"
+          matTooltip="{{ rangoCai.estaActivo ? 'Activo' : 'Inactivo' }}"
+        >
+          {{ rangoCai.estaActivo ? "check_circle" : "cancel" }}
+        </mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef class="centrar-texto">Acciones</th>
+      <td mat-cell *matCellDef="let rangoCai" class="centrar-texto">
+        <mat-icon
+          class="icono-accion"
+          (click)="abrirFormularioVerRangoCai(rangoCai.idRangoCAI)"
+          matTooltip="Ver detalle"
+          >visibility</mat-icon
+        >
+        <mat-icon
+          class="icono-accion"
+          (click)="abrirFormularioEditarVerRangoCai(rangoCai.idRangoCAI)"
+          matTooltip="Editar CAI"
+          >edit</mat-icon
+        >
+      </td>
+    </ng-container>
+
+    <!-- Encabezados y filas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <!-- Paginador -->
+  <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+</div>

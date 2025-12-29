@@ -1,0 +1,110 @@
+<div class="contenedor-tabla">
+  <h2 class="titulo">Lista de Proveedores</h2>
+
+  <!-- Mensajes de carga o error -->
+  <div *ngIf="cargando" class="mensaje-carga">Cargando proveedores...</div>
+  <div *ngIf="error" class="mensaje-error">{{ error }}</div>
+
+  <!-- Filtro y botón nuevo -->
+  <div class="filtro-boton-wrapper">
+    <div class="filtro-nuevo-container">
+      <mat-form-field appearance="outline" class="filtro-nombre">
+        <mat-label>Buscar por nombre</mat-label>
+        <input
+          matInput
+          (keyup)="aplicarFiltro($event)"
+          placeholder="Escriba un nombre..."
+        />
+      </mat-form-field>
+    </div>
+    <div class="filtro-boton-nuevo-container">
+      <button
+        mat-raised-button
+        color="primary"
+        class="btn-centrado"
+        (click)="abrirFormularioNuevoProveedor()"
+        matTooltip="Registrar Nuevo Proveedor"
+      >
+        <mat-icon>library_add</mat-icon>
+        Nuevo Proveedor
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla de Proveedores -->
+  <table
+    *ngIf="!cargando && !error"
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8 tabla-usuarios"
+    matSort
+  >
+    <!-- ID Proveedor -->
+    <ng-container matColumnDef="idProveedor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let proveedor">{{ proveedor.idProveedor }}</td>
+    </ng-container>
+
+    <!-- RTN -->
+    <ng-container matColumnDef="RTN">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>RTN</th>
+      <td mat-cell *matCellDef="let proveedor">{{ proveedor.rtnProveedor }}</td>
+    </ng-container>
+
+    <!-- Nombre Proveedor -->
+    <ng-container matColumnDef="Proveedor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Proveedor</th>
+      <td mat-cell *matCellDef="let proveedor">
+        {{ proveedor.nombreProveedor }}
+      </td>
+    </ng-container>
+
+    <!-- Estado -->
+    <ng-container matColumnDef="Activo">
+      <th mat-header-cell *matHeaderCellDef>Activo</th>
+      <td mat-cell *matCellDef="let proveedor">
+        <mat-icon
+          [ngClass]="proveedor.estaActivo ? 'icono-activo' : 'icono-inactivo'"
+          matTooltip="{{ proveedor.estaActivo ? 'Activo' : 'Inactivo' }}"
+        >
+          {{ proveedor.estaActivo ? "check_circle" : "cancel" }}
+        </mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="Acciones">
+      <th mat-header-cell *matHeaderCellDef class="centrar-texto">Acciones</th>
+      <td mat-cell *matCellDef="let proveedor" class="centrar-texto">
+        <mat-icon
+          class="icono-accion"
+          (click)="abrirFormularioVerProveedor(proveedor.idProveedor)"
+          matTooltip="Ver detalle"
+        >
+          visibility
+        </mat-icon>
+        <mat-icon
+          class="icono-accion"
+          (click)="abrirFormularioEditarProveedor(proveedor.idProveedor)"
+          matTooltip="Editar proveedor"
+        >
+          edit
+        </mat-icon>
+        <mat-icon
+          class="icono-accion"
+          (click)="abrirListaRangoCaiPorProveedor(proveedor.idProveedor)"
+          matTooltip="Ver CAI"
+        >
+          library_books
+        </mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- Encabezado y filas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <!-- Paginador -->
+  <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+</div>

@@ -1,0 +1,170 @@
+<div class="page-background">
+  <mat-card class="form-card">
+    <form
+      [formGroup]="formRegistroProveedor"
+      (ngSubmit)="crearProveedor()"
+      class="form-layout"
+    >
+      <h2>Registro de Proveedor</h2>
+
+      <!-- BLOQUE 1: RTN -->
+      <div class="form-bloque">
+        <div class="form-campo" style="max-width: 150px">
+          <label>RTN</label>
+          <input
+            matInput
+            formControlName="rtnProveedor"
+            maxlength="14"
+            (keypress)="validarSoloNumeros($event)"
+          />
+          <mat-error
+            *ngIf="
+              formRegistroProveedor.get('rtnProveedor')?.invalid &&
+              (formRegistroProveedor.get('rtnProveedor')?.touched ||
+                formRegistroProveedor.get('rtnProveedor')?.dirty)
+            "
+          >
+            <ng-container
+              *ngIf="
+                formRegistroProveedor.get('rtnProveedor')?.hasError('required')
+              "
+              >El RTN es obligatorio.</ng-container
+            >
+            <ng-container
+              *ngIf="
+                formRegistroProveedor.get('rtnProveedor')?.hasError('pattern')
+              "
+              >Solo se permiten números.</ng-container
+            >
+            <ng-container
+              *ngIf="
+                formRegistroProveedor.get('rtnProveedor')?.hasError('duplicado')
+              "
+              >Ya existe un proveedor con ese RTN.</ng-container
+            >
+          </mat-error>
+        </div>
+      </div>
+
+      <!-- BLOQUE 2: Nombre -->
+      <div class="form-bloque">
+        <div class="form-campo full-width">
+          <label>Nombre Proveedor</label>
+          <input
+            matInput
+            formControlName="nombreProveedor"
+            (input)="onInputUppercase($event)"
+          />
+          <mat-error
+            *ngIf="
+              formRegistroProveedor.get('nombreProveedor')?.invalid &&
+              (formRegistroProveedor.get('nombreProveedor')?.touched ||
+                formRegistroProveedor.get('nombreProveedor')?.dirty)
+            "
+          >
+            El nombre es obligatorio.
+          </mat-error>
+        </div>
+      </div>
+
+      <!-- BLOQUE 3: Dirección (bloque aparte) -->
+      <div class="form-bloque">
+        <div class="form-campo full-width">
+          <label>Dirección</label>
+          <input
+            matInput
+            formControlName="direccion"
+            (input)="onInputUppercase($event)"
+          />
+          <mat-error
+            *ngIf="
+              formRegistroProveedor.get('direccion')?.invalid &&
+              (formRegistroProveedor.get('direccion')?.touched ||
+                formRegistroProveedor.get('direccion')?.dirty)
+            "
+          >
+            La dirección es obligatoria.
+          </mat-error>
+        </div>
+      </div>
+
+      <!-- BLOQUE 4: Contacto (Teléfono y Correo juntos) -->
+      <div class="form-bloque">
+        <div class="form-row">
+          <div class="form-campo" style="max-width: 200px">
+            <label>Teléfono</label>
+            <input
+              matInput
+              formControlName="telefono"
+              maxlength="15"
+              (keypress)="validarTelefono($event)"
+            />
+            <mat-error
+              *ngIf="
+                formRegistroProveedor.get('telefono')?.invalid &&
+                (formRegistroProveedor.get('telefono')?.touched ||
+                  formRegistroProveedor.get('telefono')?.dirty)
+              "
+            >
+              <ng-container
+                *ngIf="
+                  formRegistroProveedor.get('telefono')?.hasError('required')
+                "
+                >El teléfono es obligatorio.</ng-container
+              >
+              <ng-container
+                *ngIf="
+                  formRegistroProveedor.get('telefono')?.hasError('pattern')
+                "
+                >Solo se permiten números.</ng-container
+              >
+            </mat-error>
+          </div>
+
+          <div class="form-campo" style="flex: 1">
+            <label>Correo</label>
+            <input matInput type="email" formControlName="correo" />
+            <mat-error
+              *ngIf="
+                formRegistroProveedor.get('correo')?.invalid &&
+                (formRegistroProveedor.get('correo')?.touched ||
+                  formRegistroProveedor.get('correo')?.dirty)
+              "
+            >
+              <ng-container
+                *ngIf="
+                  formRegistroProveedor.get('correo')?.hasError('required')
+                "
+                >El correo es obligatorio.</ng-container
+              >
+              <ng-container
+                *ngIf="formRegistroProveedor.get('correo')?.hasError('email')"
+                >Correo no válido.</ng-container
+              >
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 5: Botones -->
+      <div class="form-bloque form-botones">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="form-btn guardar"
+        >
+          Registrar
+        </button>
+        <button
+          mat-button
+          type="button"
+          class="form-btn cancelar"
+          (click)="cancelar()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

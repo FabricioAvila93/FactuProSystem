@@ -1,0 +1,21 @@
+.snackbar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  animation: fadeInOut 3s ease-in-out;
+
+  font-size: 12px;
+  max-width: 220px;        /* límite máximo ancho */
+  width: 220px;            /* ancho fijo para forzar tamaño */
+  overflow-wrap: break-word;  /* fuerza a partir palabras largas */
+  white-space: normal;        /* permite salto de línea */
+  word-break: break-word;
+  text-align: center;
+}

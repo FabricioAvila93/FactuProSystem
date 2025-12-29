@@ -1,0 +1,199 @@
+<div class="contenedor-tabla">
+  <h2 class="titulo">Evaluación de Facturas</h2>
+
+  <!-- Mensajes de carga o error -->
+  <div *ngIf="cargando" class="mensaje-carga">Cargando facturas...</div>
+  <div *ngIf="error" class="mensaje-error">{{ error }}</div>
+
+  <!-- Filtro y botón nuevo -->
+  <div class="filtro-boton-wrapper">
+    <div class="filtro-nuevo-container">
+      <mat-form-field appearance="outline" class="filtro-nombre">
+        <mat-label>Buscar por nombre</mat-label>
+        <input
+          matInput
+          (keyup)="aplicarFiltro($event)"
+          placeholder="Escriba un nombre..."
+        />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Tabla de facturas -->
+  <table
+    *ngIf="!cargando && !error"
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8 tabla-usuarios"
+    matSort
+  >
+    <!-- ID factura -->
+    <ng-container matColumnDef="idFactura">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let factura">{{ factura.idFactura }}</td>
+    </ng-container>
+
+    <!-- Nombre proveedor -->
+    <ng-container matColumnDef="nombreProveedor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Proveedor</th>
+      <td mat-cell *matCellDef="let factura">{{ factura.nombreProveedor }}</td>
+    </ng-container>
+
+    <!-- RTN proveedor -->
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Factura</th>
+      <td mat-cell *matCellDef="let factura">
+        {{ factura.fecha | date : "dd/MM/yyyy" }}
+      </td>
+    </ng-container>
+
+    <!-- Fecha -->
+    <ng-container matColumnDef="codigoUsuario">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Usuario</th>
+      <td mat-cell *matCellDef="let factura">{{ factura.codigoUsuario }}</td>
+    </ng-container>
+
+    <!-- Estado -->
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let factura">
+        {{ obtenerNombreEstado(factura.idEstado) }}
+      </td>
+    </ng-container>
+
+    <!-- Comentario -->
+    <ng-container matColumnDef="comentarioAdmin">
+      <th mat-header-cell *matHeaderCellDef>Comentario</th>
+      <td mat-cell *matCellDef="let factura">
+        <!-- Icono si existe comentario -->
+        <button
+          *ngIf="factura.comentarioAdmin"
+          mat-icon-button
+          color="primary"
+          matTooltip="Ver comentario"
+          (click)="abrirComentario(factura.comentarioAdmin)"
+        >
+          <mat-icon>comment</mat-icon>
+        </button>
+        <!-- Guion si no hay comentario -->
+        <span *ngIf="!factura.comentarioAdmin">-</span>
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let factura">
+        <button
+          mat-icon-button
+          matTooltip="Ver"
+          (click)="verFactura(factura.idFactura)"
+        >
+          <mat-icon>visibility</mat-icon>
+        </button>
+
+        <button
+          *ngIf="factura.idEstado === 11"
+          mat-icon-button
+          color="accent"
+          matTooltip="Editar factura para corregir"
+          (click)="abrirFormularioEditarFactura(factura)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          *ngIf="idRol === 1 && factura.idEstado === 9"
+          mat-icon-button
+          color="primary"
+          matTooltip="Aceptar"
+          (click)="abrirAprobacion(factura)"
+        >
+          <mat-icon>check_circle</mat-icon>
+        </button>
+
+        <button
+          *ngIf="idRol === 1 && factura.idEstado === 9"
+          mat-icon-button
+          color="warn"
+          matTooltip="Rechazar"
+          (click)="abrirRechazo(factura)"
+        >
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [ngClass]="{
+        'estado-aceptada': row.idEstado === 10,
+        'estado-rechazada': row.idEstado === 11
+      }"
+    ></tr>
+  </table>
+
+  <!-- Paginador -->
+  <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+</div>
+
+<!-- Comentario de Rechazo -->
+<div *ngIf="rechazoAbierto && facturaSeleccionada" class="comentario-container">
+  <h3>
+    Motivo de Rechazo para Factura ID: {{ facturaSeleccionada.idFactura }}
+  </h3>
+  <textarea
+    [(ngModel)]="comentarioRechazo"
+    placeholder="Ingrese el motivo..."
+  ></textarea>
+  <br /><br />
+  <button class="btn-evaluar btn-rechazar" (click)="confirmarRechazo()">
+    <mat-icon>cancel</mat-icon> Rechazar
+  </button>
+  <button class="btn-evaluar btn-cancelar" (click)="cancelarRechazo()">
+    <mat-icon>close</mat-icon> Cancelar
+  </button>
+</div>
+
+<!-- Dialog inline para mostrar comentario completo -->
+<ng-template #dialogComentario let-data>
+  <h3>Comentario</h3>
+  <div class="comentario-dialogo">
+    <textarea readonly [value]="data.comentario"></textarea>
+  </div>
+  <div style="text-align: right; margin-top: 10px">
+    <button mat-button (click)="cerrarDialog()">Cerrar</button>
+  </div>
+</ng-template>
+
+<!-- Dialog inline para mostrar observaciones de aprobación -->
+<ng-template #dialogObservaciones let-data>
+  <h3>Observaciones</h3>
+  <div class="comentario-dialogo">
+    <textarea readonly [value]="data.observaciones"></textarea>
+  </div>
+  <div style="text-align: right; margin-top: 10px">
+    <button mat-button (click)="cerrarDialog()">Cerrar</button>
+  </div>
+</ng-template>
+
+<!-- Comentario de Aprobación -->
+<div
+  *ngIf="aprobacionAbierta && facturaSeleccionada"
+  class="comentario-container"
+>
+  <h3>Observaciones para Factura ID: {{ facturaSeleccionada.idFactura }}</h3>
+  <textarea
+    [(ngModel)]="comentarioAprobacion"
+    placeholder="Observaciones..."
+  ></textarea>
+  <br /><br />
+  <button class="btn-evaluar btn-aprobar" (click)="confirmarAprobacion()">
+    <mat-icon>check_circle</mat-icon> Aprobar
+  </button>
+  <button class="btn-evaluar btn-cancelar" (click)="cancelarAprobacion()">
+    <mat-icon>close</mat-icon> Cancelar
+  </button>
+</div>

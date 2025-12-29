@@ -1,0 +1,189 @@
+<div class="page-background">
+  <mat-card class="form-card">
+    <form
+      [formGroup]="formUsuario"
+      class="form-layout"
+      (ngSubmit)="guardarCambios()"
+    >
+      <h2>
+        {{
+          modo === "ver"
+            ? "Detalle Usuario"
+            : esNuevo
+            ? "Registrar Usuario"
+            : "Editar Usuario"
+        }}
+      </h2>
+
+      <!-- BLOQUE 1: Identificación y Sexo -->
+      <div class="form-bloque">
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Identificación</label>
+            <input
+              matInput
+              formControlName="identificacion"
+              maxlength="15"
+              [readonly]="modo === 'ver'"
+            />
+          </div>
+
+          <div class="form-campo">
+            <label>Sexo</label>
+            <mat-select
+              formControlName="esMasculino"
+              [disabled]="modo === 'ver'"
+            >
+              <mat-option value="" disabled>Seleccione una opción</mat-option>
+              <mat-option [value]="true">MASCULINO</mat-option>
+              <mat-option [value]="false">FEMENINO</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                formUsuario.get('esMasculino')?.invalid &&
+                (formUsuario.get('esMasculino')?.touched ||
+                  formUsuario.get('esMasculino')?.dirty)
+              "
+            >
+              El sexo es obligatorio.
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 2: Nombre y Código Usuario -->
+      <div class="form-bloque">
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Nombre Completo</label>
+            <input
+              matInput
+              formControlName="nombreCompleto"
+              (input)="onInputUppercase($event)"
+              [readonly]="modo === 'ver'"
+            />
+          </div>
+          <div class="form-campo">
+            <label>Código Usuario</label>
+            <input
+              matInput
+              formControlName="codigoUsuario"
+              (input)="onInputUppercase($event)"
+              [readonly]="modo === 'ver'"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 3: Dirección -->
+      <div class="form-bloque">
+        <div class="form-campo full-width">
+          <label>Dirección</label>
+          <input
+            matInput
+            formControlName="direccion"
+            (input)="onInputUppercase($event)"
+            [readonly]="modo === 'ver'"
+          />
+        </div>
+      </div>
+
+      <!-- BLOQUE 4: Teléfono y Correo -->
+      <div class="form-bloque">
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Teléfono</label>
+            <input
+              matInput
+              formControlName="telefono"
+              maxlength="13"
+              [readonly]="modo === 'ver'"
+            />
+          </div>
+          <div class="form-campo">
+            <label>Correo</label>
+            <input
+              matInput
+              formControlName="correo"
+              type="email"
+              [readonly]="modo === 'ver'"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 5: Rol y Agencia -->
+      <div class="form-bloque">
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Rol</label>
+            <mat-select formControlName="idRol" [disabled]="modo === 'ver'">
+              <mat-option *ngFor="let rol of roles" [value]="rol.id">{{
+                rol.nombre
+              }}</mat-option>
+            </mat-select>
+          </div>
+          <div class="form-campo">
+            <label>Agencia</label>
+            <mat-select formControlName="idAgencia" [disabled]="modo === 'ver'">
+              <mat-option
+                *ngFor="let agencia of agencias"
+                [value]="agencia.id"
+                >{{ agencia.nombre }}</mat-option
+              >
+            </mat-select>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 6: Auditoría -->
+      <div class="form-bloque">
+        <div class="form-row">
+          <div class="form-campo">
+            <label>Usuario Registro</label>
+            <input matInput formControlName="usuarioRegistro" readonly />
+          </div>
+          <div class="form-campo">
+            <label>Fecha Registro</label>
+            <input matInput formControlName="fechaRegistro" readonly />
+          </div>
+          <div class="form-campo">
+            <label>Usuario Modificación</label>
+            <input matInput formControlName="usuarioModificacion" readonly />
+          </div>
+          <div class="form-campo">
+            <label>Fecha Modificación</label>
+            <input matInput formControlName="fechaModificacion" readonly />
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 7: Activo -->
+      <div class="form-bloque">
+        <mat-checkbox formControlName="estaActivo" [disabled]="modo === 'ver'"
+          >Activo</mat-checkbox
+        >
+      </div>
+
+      <!-- BLOQUE 8: Botones -->
+      <div class="form-bloque form-botones">
+        <button
+          mat-raised-button
+          color="primary"
+          class="form-btn guardar"
+          *ngIf="modo === 'editar'"
+        >
+          Guardar
+        </button>
+        <button
+          mat-button
+          type="button"
+          class="form-btn cancelar"
+          (click)="cancelar()"
+        >
+          Cerrar
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

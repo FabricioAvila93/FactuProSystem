@@ -1,0 +1,106 @@
+<div class="contenedor-tabla">
+  <h2 class="titulo">Lista de Facturas</h2>
+
+  <!-- Mensajes de carga o error -->
+  <div *ngIf="cargando" class="mensaje-carga">Cargando facturas...</div>
+  <div *ngIf="error" class="mensaje-error">{{ error }}</div>
+
+  <!-- Filtro y botón nuevo -->
+  <div class="filtro-boton-wrapper">
+    <div class="filtro-nuevo-container">
+      <mat-form-field appearance="outline" class="filtro-nombre">
+        <mat-label>Buscar por nombre</mat-label>
+        <input
+          matInput
+          (keyup)="aplicarFiltro($event)"
+          placeholder="Escriba un nombre..."
+        />
+      </mat-form-field>
+    </div>
+    <div class="filtro-boton-nuevo-container">
+      <button
+        mat-raised-button
+        color="primary"
+        class="btn-centrado"
+        (click)="abrirFormularioNuevaFactura()"
+        matTooltip="Registrar Nueva factura"
+      >
+        <mat-icon>file_copy</mat-icon>
+        Nueva Factura
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla de facturas -->
+  <table
+    *ngIf="!cargando && !error"
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8 tabla-usuarios"
+    matSort
+  >
+    <!-- ID factura -->
+    <ng-container matColumnDef="idFactura">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let factura">{{ factura.idFactura }}</td>
+    </ng-container>
+
+    <!-- Nombre proveedor -->
+    <ng-container matColumnDef="nombreProveedor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Proveedor</th>
+      <td mat-cell *matCellDef="let factura">{{ factura.nombreProveedor }}</td>
+    </ng-container>
+
+    <!-- RTN proveedor -->
+    <ng-container matColumnDef="rtnProveedor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>RTN</th>
+      <td mat-cell *matCellDef="let factura">{{ factura.rtnProveedor }}</td>
+    </ng-container>
+
+    <!-- Fecha -->
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+      <td mat-cell *matCellDef="let factura">
+        {{ factura.fecha | date : "dd/MM/yyyy" }}
+      </td>
+    </ng-container>
+
+    <!-- Código usuario -->
+    <ng-container matColumnDef="codigoUsuario">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Código Usuario</th>
+      <td mat-cell *matCellDef="let factura">{{ factura.codigoUsuario }}</td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef class="centrar-texto">Acciones</th>
+      <td mat-cell *matCellDef="let factura" class="centrar-texto">
+        <mat-icon
+          class="icono-accion"
+          (click)="abrirFormularioVerFactura(factura.idFactura)"
+          matTooltip="Ver Detalle"
+        >
+          visibility
+        </mat-icon>
+        <mat-icon
+          *ngIf="
+            factura.codigoUsuario === usuarioLogueado &&
+            factura.idEstado !== estadoAprobado
+          "
+          class="icono-accion"
+          (click)="abrirFormularioEditarFactura(factura.idFactura)"
+          matTooltip="Editar Factura"
+        >
+          edit
+        </mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- Encabezado y filas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <!-- Paginador -->
+  <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+</div>

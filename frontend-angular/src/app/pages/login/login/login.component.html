@@ -1,0 +1,31 @@
+<div class="page-background">
+  <mat-card class="card-login-vertical">
+    <div class="logo-centrado">
+      <img src="assets/images/LOGO-FAMA-OPDF.png" alt="Logo FAMA" />
+    </div>
+
+    <h2>Bienvenido</h2>
+
+    <form class="form-login" [formGroup]="formLogin">
+      <mat-form-field appearance="fill" class="input-custom">
+        <mat-label>Usuario</mat-label>
+        <input
+          matInput
+          formControlName="codigoUsuario"
+          style="text-transform: uppercase"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="input-custom">
+        <mat-label>Clave</mat-label>
+        <input matInput formControlName="clave" type="password" />
+      </mat-form-field>
+
+      <div class="botones">
+        <button mat-raised-button color="primary" (click)="iniciarSesion()">
+          Iniciar sesión
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

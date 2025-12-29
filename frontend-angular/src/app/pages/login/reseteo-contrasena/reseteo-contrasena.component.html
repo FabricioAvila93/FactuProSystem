@@ -1,0 +1,87 @@
+<div class="page-background">
+  <mat-card class="card-login-vertical">
+    <div class="logo-centrado">
+      <img src="assets/images/LOGO-FAMA-OPDF.png" alt="Logo FAMA" />
+    </div>
+
+    <h2>Restablecer Contraseña</h2>
+
+    <form
+      class="form-login"
+      [formGroup]="formResetPassword"
+      (ngSubmit)="guardarCambios()"
+    >
+      <mat-form-field appearance="fill" class="input-custom">
+        <mat-label>Código Usuario</mat-label>
+        <input matInput formControlName="codigoUsuario" readonly />
+      </mat-form-field>
+
+      <!-- Nueva Contraseña -->
+      <mat-form-field appearance="fill" class="input-custom">
+        <mat-label>Nueva Contraseña</mat-label>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="nuevaClave"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hidePassword = !hidePassword"
+        >
+          <mat-icon>{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <!-- Confirmar Contraseña -->
+      <mat-form-field appearance="fill" class="input-custom">
+        <mat-label>Confirmar Contraseña</mat-label>
+        <input
+          matInput
+          [type]="hideConfirmPassword ? 'password' : 'text'"
+          formControlName="confirmarClave"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hideConfirmPassword = !hideConfirmPassword"
+        >
+          <mat-icon>{{
+            hideConfirmPassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <!-- Mensajes de validación de coincidencia -->
+      <p
+        *ngIf="
+          formResetPassword.get('confirmarClave')?.touched ||
+          formResetPassword.get('confirmarClave')?.dirty
+        "
+        class="mensaje-validacion"
+      >
+        {{
+          formResetPassword.hasError("noCoinciden")
+            ? "Las contraseñas no coinciden"
+            : ""
+        }}
+      </p>
+
+      <div class="botones">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="formResetPassword.invalid"
+        >
+          Cambiar Contraseña
+        </button>
+        <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  </mat-card>
+</div>

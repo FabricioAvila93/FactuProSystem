@@ -1,0 +1,9 @@
+<div class="container">
+  <h2>LISTA DE REPORTES DISPONIBLES</h2>
+
+  <ul class="lista-reportes">
+    <li *ngFor="let r of reportes">
+      <a [routerLink]="r.ruta">{{ r.nombre }}</a>
+    </li>
+  </ul>
+</div>
