@@ -1,0 +1,6 @@
+@FactuProSystem.Api_HostAddress = http://localhost:5104
+
+GET {{FactuProSystem.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,26 @@
+# -------------------------------
+# C# / Backend
+# -------------------------------
+
+# Carpeta de compilación
+/bin/
+/obj/
+
+# Archivos de usuario de Visual Studio
+/*.user
+/*.suo
+/*.vs/
+
+# Logs
+*.log
+
+# NuGet packages
+*.nupkg
+packages/
+
+# Rider IDE
+.idea/
+
+# Archivos temporales
+*.tmp
+*.temp
