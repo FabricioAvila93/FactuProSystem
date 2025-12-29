@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>FacturasDB</DataSourceReference>
+      <CommandText>SELECT 
+    P.NombreProveedor,
+    PCR.DocumentoFiscal_Inicio,
+    PCR.DocumentoFiscal_Fin
+FROM Fps_Proveedor P
+INNER JOIN Fps_ProveedorCaiRango PCR ON PCR.IdProveedor = P.IdProveedor
+INNER JOIN Fps_Facturas F ON F.IdProveedor = P.IdProveedor</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="NombreProveedor">
+        <DataField>NombreProveedor</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="DocumentoFiscal_Inicio">
+        <DataField>DocumentoFiscal_Inicio</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="DocumentoFiscal_Fin">
+        <DataField>DocumentoFiscal_Fin</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

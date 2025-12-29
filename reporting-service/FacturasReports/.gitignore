@@ -1,0 +1,22 @@
+# -------------------------------
+# Reporting / Service
+# -------------------------------
+
+# Carpeta de compilación
+/bin/
+/obj/
+
+# Archivos temporales
+*.tmp
+*.temp
+*.log
+
+# Visual Studio / Rider
+/*.user
+/*.suo
+/*.vs/
+.idea/
+
+# Archivos generados por el sistema
+.DS_Store
+Thumbs.db
